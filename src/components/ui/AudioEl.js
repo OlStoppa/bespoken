@@ -1,15 +1,6 @@
 import React, {useEffect, useRef} from 'react';
-import styled from 'styled-components';
 
-
-const VideoElement = styled.video`
-  background-color: #ddd;
-    width: 300px;
-  place-self: center;
-  
-`;
-
-const VideoEl = (props) => {
+const AudioEl = (props) => {
 
     const myref = useRef(null);
     const {stream} = props;
@@ -20,8 +11,8 @@ const VideoEl = (props) => {
     }, [stream, myref])
 
     return (
-        <VideoElement ref={myref}  autoPlay playsInline/>
+        <audio ref={myref}  autoPlay playsInline/>
     );
 }
 
-export default VideoEl;
+export default AudioEl;

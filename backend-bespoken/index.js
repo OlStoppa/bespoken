@@ -26,6 +26,7 @@ const mediaServer = mediasoup.Server({
 
 const rooms = new Map();
 const chatMessages = {};
+const users = {};
 
 io.on("connection", (socket) => {
     console.log(" New connection", socket.handshake.query);
@@ -34,13 +35,16 @@ io.on("connection", (socket) => {
     let mediaPeer = null;
 
     const { roomId, peerName } = socket.handshake.query;
-
+    
     if(rooms.has(roomId)){
         room = rooms.get(roomId);
+        users[roomId]++;
     } else {
+        users[roomId] = 1;
         room = mediaServer.Room(config.mediasoup.mediaCodecs);
         rooms.set(roomId, room);
         room.on('close', () => {
+            console.log("closing room!!!!")
             delete chatMessages[roomId];
             rooms.delete(roomId);           
         })
@@ -104,6 +108,10 @@ io.on("connection", (socket) => {
     socket.on('disconnect', () => {
         if(mediaPeer){
             mediaPeer.close();
+        }
+        users[roomId]--;
+        if(users[roomId] === 0){
+            room.close();
         }
 
        

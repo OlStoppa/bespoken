@@ -5,6 +5,7 @@ import openSocket from "socket.io-client";
 import { Room } from "mediasoup-client";
 import Chat from "../ui/Chat";
 import VideoEl from "../ui/VideoEl";
+import AudioEl from "../ui/AudioEl";
 
 const Main = styled.div`  
   width: 100%;
@@ -42,7 +43,8 @@ const Grid = styled.div`
 `;
 const VideoElement = styled.video`
   background-color: #ddd;
-  width: 100%;
+  place-self: center;
+  width: 300px;
 `;
 
 const InteractionPanel = styled.div`
@@ -58,7 +60,9 @@ const VideoContainer = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gird-template-rows: 1fr 1fr;
+  gird-template-rows: minmax(0,1fr) minmax(0,1fr);
+  height: 100%;
+  background: black;
 
    div {
     display: flex;
@@ -79,7 +83,7 @@ class ConferenceRoom extends React.Component {
       socket: null,
       localStream: null,
       videoProducer: null,
-      audioProducer: null, 
+      audioProducer: null,
       incomingVideo: [],
       incomingAudio: []
     };
@@ -108,7 +112,7 @@ class ConferenceRoom extends React.Component {
 
       peers.forEach(peer => this.handlePeer(peer));
     })
-    .then(() => {
+      .then(() => {
         return navigator.mediaDevices.getUserMedia({
           audio: true,
           video: true
@@ -118,9 +122,14 @@ class ConferenceRoom extends React.Component {
         const audioTrack = stream.getAudioTracks()[0];
         const videoTrack = stream.getVideoTracks()[0];
         const localStream = new MediaStream([videoTrack]);
+        this.setState({localStream});
         this.myVideo.current.srcObject = localStream;
         const audioProducer = this.room.createProducer(audioTrack);
         const videoProducer = this.room.createProducer(videoTrack);
+        this.setState({
+          audioProducer,
+          videoProducer
+        });
 
         // Send our audio.
         audioProducer.send(sendTransport);
@@ -164,8 +173,8 @@ class ConferenceRoom extends React.Component {
   handlePeer(peer) {
     // Handle all the Consumers in the Peer.
     peer.consumers.forEach(consumer => this.handleConsumer(consumer));
-    peer.on("close", () => {
-      console.log("Remote Peer closed");
+    peer.on("close", (peer) => {
+      console.log("Remote Peer closed", peer);
     });
 
     // Event fired when the remote Peer sends a new media to mediasoup server.
@@ -180,15 +189,28 @@ class ConferenceRoom extends React.Component {
     consumer.receive(this.recvTransport).then(track => {
       const stream = new MediaStream();
       stream.addTrack(track);
+      stream.consumerId = consumer.id;
+      
+      if (consumer.kind === "video") {  
+        const arr = [...this.state.incomingVideo, stream];
+        this.setState({ incomingVideo: arr }, () => {
+        })
+      }
+      if (consumer.kind === "audio") {
+        const arr = [...this.state.incomingAudio, stream];
+        this.setState({ incomingAudio: arr })
+      }
+      consumer.on("close", () => {
         if (consumer.kind === "video") {
-          const arr = [...this.state.incomingVideo, stream];
-          this.setState({incomingVideo: arr}, () => {           
-          })
+          const streamsArr = this.state.incomingVideo.filter((stream) => stream.consumerId !== consumer.id);
+          console.log("id comparison", consumer.id)
+          this.setState({ incomingVideo: streamsArr })
         }
         if (consumer.kind === "audio") {
-          const arr = [...this.state.incomingAudio, stream];
-          this.setState({incomingAudio: arr})
-        }     
+          const streamsArr = this.state.incomingAudio.filter((stream) => stream.consumerId !== consumer.id);
+          this.setState({ incomingAudio: streamsArr })
+        }
+      })
     });
   }
 
@@ -203,35 +225,41 @@ class ConferenceRoom extends React.Component {
   };
 
   render() {
-    return (        
-        <Main>
-          <Grid>
-            <InteractionPanel>             
-              <div style={{ height: "100%" }}>
-                <Chat 
-                  socket={this.state.socket} 
-                />
-              </div>
-            </InteractionPanel>
-            <VideoContainer>
-              <VideoElement
-                ref={this.myVideo}
-                autoplay
-                playsInline
+    console.log(this.state.incomingVideo)
+    return (
+      <Main>
+        <Grid>
+          <InteractionPanel>
+            <div style={{ height: "100%" }}>
+              <Chat
+                socket={this.state.socket}
               />
-              {
-                this.state.incomingVideo.map((stream) => {
-                  return <VideoEl key={stream}  stream={stream}/>
-                })
-              }             
-            </VideoContainer>
-          </Grid>
-        </Main>
+            </div>
+          </InteractionPanel>
+          <VideoContainer>
+            <VideoElement
+              ref={this.myVideo}
+              autoPlay
+              playsInline
+            />
+            {
+              this.state.incomingVideo.map(stream => 
+                   <VideoEl key={stream.id} stream={stream} />
+              )
+            }
+            {
+              this.state.incomingAudio.map(stream => 
+                <AudioEl key={stream.id} stream={stream}/>
+              )
+            }
+          </VideoContainer>
+        </Grid>
+      </Main>
     );
   }
 }
 const mapStateToProps = state => ({
-  username: state.user 
+  username: state.user
 });
 
 export default connect(mapStateToProps)(ConferenceRoom);

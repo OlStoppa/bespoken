@@ -161,7 +161,7 @@ const Landing = () => {
                 Chat <span style={{ color: "#84ebad" }}>privately</span> as part of a community.
               </h1>
               <p>
-                Join an existing room or open a new 
+                Join an existing room or open a new one.
               </p>
               <div>
                 <MainButton
