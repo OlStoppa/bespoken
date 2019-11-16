@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
     background: ${props => props.pathname === `/` ? `transparent` : `#24a7ff` };
     color: white;
     width: 100%;
-    padding: 1rem 0;
+    padding: 1rem 1rem;
     z-index: 100;
 `;
 
@@ -97,7 +97,7 @@ return(
     <>
     <HeaderContainer pathname={location.pathname}>
         <NavbarFluid>
-        <h3>ClassStream</h3>
+        <h3>Bespoken</h3>
         <h5 onClick={() => setModalVisible(true)}>Start/Join Room</h5>
         
         </NavbarFluid>

@@ -10,6 +10,7 @@ const ChatContainer = styled.div`
   width: 100%;
   outline: 1px solid #c8c8c8;
   display: flex;
+  flex-grow: 1;
   height: 100%;
   flex-direction: column;
 `;
@@ -26,6 +27,7 @@ const ChatWindow = styled.div`
 
   @media(max-width: 768px ) {
     max-height: 400px;
+    flex-grow: 1;
     
   }
 `;
@@ -33,7 +35,7 @@ const ChatWindow = styled.div`
 const InputContainer = styled.div`
  
 
-  flex-grow: 1;
+  height: 20%;
   width: 100%;
   background: white;
   padding: 1rem;

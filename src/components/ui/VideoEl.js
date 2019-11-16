@@ -7,6 +7,9 @@ const VideoElement = styled.video`
     width: 300px;
   place-self: center;
   
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const VideoEl = (props) => {

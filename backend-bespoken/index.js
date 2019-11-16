@@ -1,8 +1,10 @@
-const express = require("express");
-const http = require("http");
-const socketIO = require("socket.io");
+const path = require('path')
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
 const config = require('./config');
 const mediasoup = require('mediasoup');
+const publicPath = path.join(__dirname, '..', 'build');
 
 const port = process.env.PORT || 3001;
 
@@ -154,7 +156,10 @@ io.on("connection", (socket) => {
     }
 });
 
+app.use(express.static(publicPath));
+app.use("/room:id", express.static(publicPath));
 
+console.log(publicPath);
 
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

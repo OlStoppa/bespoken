@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
-height: 300px;
 width: 45%;
 position: relative;
 background-color: #fcfcfd;
@@ -35,7 +34,11 @@ display: flex;
 const CardImg = styled.div`
     width: 20%;
     display: flex;
-    align-items: center;
+
+    @media(max-width: 768px){
+        width: 100%;
+        justify-content: center;
+    }
     
 `;
 

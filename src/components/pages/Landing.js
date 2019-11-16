@@ -22,6 +22,12 @@ const HeaderHolder = styled.div`
   padding-top: 100px;
   top: 0;
   left: 0;
+
+  @media(max-width: 768px){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Background = styled.div`
@@ -53,6 +59,10 @@ const TopContentContainer = styled.div`
   padding-top: 110px;
   padding-bottom: 110px;
   text-align: left;
+
+  @media(max-width: 768px){
+    padding: 0;
+  }
 `;
 
 const FluidContent = styled.div`
@@ -61,7 +71,7 @@ const FluidContent = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  @media(max-width: 768px){
+  @media(max-width: 1024px){
     width: 100%;
     position: relative;
     padding: 0 1rem;
@@ -87,9 +97,8 @@ const MainTitles = styled.div`
     margin: 1rem 0;
   }
 
-  @media(max-width: 768 px) {
+  @media(max-width: 768px) {
     position: relative;
-    margin-bottom: 200px;
     width: 100%;
   }
 `;
@@ -107,9 +116,14 @@ img {
     transform: skewY(8deg);
 }
 
-  @media(max-width: 786px) {
+  @media(max-width: 1024px){
     right: 0;
-    position: absolute;
+    max-width: 500px;
+  }
+
+  @media(max-width: 768px) {
+    position: relative;
+    right: auto;
   }
 `;
 
@@ -136,9 +150,7 @@ const TitleContainer = styled.div`
     height: 2px;
     background-color: #D9E3F2;
     left: 50%;
-    margin-left: -78px;
-    
-   
+    margin-left: -78px; 
   }
 `;
 
@@ -158,7 +170,7 @@ const Landing = () => {
           <FluidContent>
             <MainTitles>
               <h1>
-                Chat <span style={{ color: "#84ebad" }}>privately</span> as part of a community.
+                Conference <span style={{ color: "#84ebad" }}>privately</span> in a live video chat room.
               </h1>
               <p>
                 Join an existing room or open a new one.
@@ -167,48 +179,48 @@ const Landing = () => {
                 <MainButton
                   color="white"
                   background="#3195ff"
-                  text="register"
+                  text="Get Started"
                 />
               </div>
             </MainTitles>
           </FluidContent>
         </TopContentContainer>
-        <Background>
+        <Background/>
           <GraphicContainer>
             <img src={groupChat} alt="people chatting online" />
           </GraphicContainer>
-        </Background>
+        
       </HeaderHolder>
       <div>
         <FluidContent>
           <TitleContainer>
-            <h2>Our Classes</h2>
-            <h4>Checkout our usual classes or if you have special requirements, just send us a message.</h4>
+            <h2>Our Service</h2>
+            <h4>Just choose a username and say which room you would like to join. If there is no room by that name, a new one will be opened.</h4>
           </TitleContainer>
         </FluidContent>
         <FluidContent>
           <ServiceCard
             img={PublicStreamSvg}
-            title="Free Classes"
-            text="Free classes are open to everyone to hang out and improve your English"
+            title="Teaching"
+            text="Bespoken is a great place for online classes. Use live video and chat."
             color="#24a7ff"
           />
           <ServiceCard
             img={LimitedStreamSvg}
-            title="Limited Classes"
-            text="We run a number of daily streams that are limited to 10 users only. Everyone can participate as much as they like by live video chat."
+            title="Low latency"
+            text="Bespoken uses webRTC to connect straight to your browser for minimal lag."
             color="rgb(132, 235, 173)"
           />
           <ServiceCard
             img={PrivateSvg}
-            title="Private Classes"
-            text="One to one and small group classes are available and can be arranged to suit your schedule. The topic of these classes can be anything you like. Popular choices are things like speaking test preparation and interview practice."
+            title="Privacy"
+            text="No user data is stored after a room has been closed and communications are encrypted with SSL."
             color="#24a7ff"
           />
           <ServiceCard
             img={TestSvg}
-            title="Speaking Tests"
-            text="Do you need to take the IELTS or TOEFL? We offer a speaking test service where you can take a test with one of our experienced teachers and receive your estimated score and helpful feedback."
+            title="CPU light"
+            text="Bespoken uses a selective forwarding unit for live video communication."
             color="rgb(132, 235, 173)"
           />
 

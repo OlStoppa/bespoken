@@ -26,6 +26,13 @@ const ModalBox = Styled.div`
     
     width: 30%;
     background: white;
+
+    @media(max-width: 768px){
+        width: 60%;
+    }
+    @media(max-width: 425px){
+        width: 95%;
+    }
 `;
 const Modal = props => {
     return ReactDom.createPortal(

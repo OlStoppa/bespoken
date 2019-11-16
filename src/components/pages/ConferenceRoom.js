@@ -7,7 +7,7 @@ import Chat from "../ui/Chat";
 import VideoEl from "../ui/VideoEl";
 import AudioEl from "../ui/AudioEl";
 
-const Main = styled.div`  
+const Main = styled.div` 
   width: 100%;
   background: white;
   display: flex;
@@ -15,9 +15,11 @@ const Main = styled.div`
   align-items: center;
   padding: 150px 1rem 1rem 2rem;
   background: #f5f5f5;
+  
 
   @media(max-width: 768px) {
     padding: 100px 0 0 0;
+    height: 100vh;
   }
 `;
 const Grid = styled.div`
@@ -35,7 +37,7 @@ const Grid = styled.div`
   }
 
   @media (max-width: 768px) {
-    height: auto;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -45,6 +47,10 @@ const VideoElement = styled.video`
   background-color: #ddd;
   place-self: center;
   width: 300px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const InteractionPanel = styled.div`
@@ -53,6 +59,7 @@ const InteractionPanel = styled.div`
   height: 100%;
   @media (max-width: 768px) {
     order: 2;
+    
   }
 `;
 
@@ -60,9 +67,9 @@ const VideoContainer = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gird-template-rows: minmax(0,1fr) minmax(0,1fr);
+  // grid-template-rows: minmax(0,1fr) minmax(0,1fr);
   height: 100%;
-  background: black;
+  background: white;
 
    div {
     display: flex;
@@ -71,6 +78,7 @@ const VideoContainer = styled.div`
   }
   @media (max-width: 768px) {
     order: 1;
+    height: auto;
   }
 `;
 
@@ -97,7 +105,7 @@ class ConferenceRoom extends React.Component {
     const roomId = this.props.match.params.id;
     const peerName = this.props.username;
 
-    const socket = openSocket("http://178.128.222.66:3001", {
+    const socket = openSocket("/", {
       query: { roomId, peerName }
     });
 
