@@ -23,7 +23,7 @@ const VideoEl = (props) => {
     }, [stream, myref])
 
     return (
-        <VideoElement ref={myref}  autoPlay playsInline/>
+        <VideoElement ref={myref}  autoPlay playsInline controls/>
     );
 }
 
