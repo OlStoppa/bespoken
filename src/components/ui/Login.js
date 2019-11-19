@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { setUsername } from '../../actions/user';
@@ -42,7 +42,7 @@ const Form = styled.form`
 `;
 
 
-const renderInput = ({input, type}) => {
+const renderInput = ({ input, type }) => {
     return (
         <input {...input} type={type} />
     );
@@ -52,25 +52,25 @@ const Login = (props) => {
     let history = useHistory();
     const onSubmitLogin = (formValues) => {
         const { username, roomId } = formValues;
-        props.setUsername(username).then(() => history.push(`/room:${roomId}`));
+        props.setUsername(username).then(() => history.push(`/room/:${roomId}`));
         props.setModalVisible(false);
     }
 
     return (
         <Container>
             <Header>
-            <h2>Start or Join a Room</h2>
+                <h2>Start or Join a Room</h2>
             </Header>
             <Form onSubmit={props.handleSubmit(onSubmitLogin)}>
-            <label>
-                Username
+                <label>
+                    Username
             <Field name="username" component={renderInput} type="text" />
-            </label>
-            <label>
-                Room Name
+                </label>
+                <label>
+                    Room Name
             <Field name="roomId" component={renderInput} type="text" />
-            </label>
-            <button>Submit</button>
+                </label>
+                <button>Submit</button>
             </Form>
         </Container>
     );

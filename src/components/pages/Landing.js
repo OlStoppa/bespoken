@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from 'react-redux';
 import styled from "styled-components";
+import { toggleModal } from '../../actions/modal';
 import MainButton from "../ui/MainButton";
 import ServiceCard from "../ui/ServiceCard";
 import PublicStreamSvg from "../../assets/online-class.svg";
@@ -7,6 +9,7 @@ import LimitedStreamSvg from "../../assets/online.svg";
 import PrivateSvg from "../../assets/privacy.svg";
 import TestSvg from "../../assets/motivational-speech.svg";
 import groupChat from "../../assets/group-chat.svg";
+import Header from '../../components/ui/Header';
 
 
 
@@ -161,9 +164,11 @@ const ClassroomsContainer = styled.div`
 
 `;
 
-const Landing = () => {
+const Landing = ({ toggleModal }) => {
 
   return (
+    <>
+    <Header/>
     <Container>
       <HeaderHolder>
         <TopContentContainer>
@@ -180,6 +185,7 @@ const Landing = () => {
                   color="white"
                   background="#3195ff"
                   text="Get Started"
+                  onClick={toggleModal}
                 />
               </div>
             </MainTitles>
@@ -237,8 +243,16 @@ const Landing = () => {
         </FluidContent>
       </ClassroomsContainer>
     </Container>
+    </>
   );
 };
 
+const mapStateToProps = state => ({
+  modalOpen: state.modal.modalOpen
+});
 
-export default Landing;
+const mapDispatchToProps = dispatch => ({
+  toggleModal: () => dispatch(toggleModal())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

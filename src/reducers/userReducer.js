@@ -1,8 +1,14 @@
-export default (state = [], action) => {
+const initialState = {
+    username: null
+}
+
+export default (state = initialState, action) => {
     switch(action.type){
         
         case 'SET_USERNAME':
-            return action.username;
+            return {
+                username: action.username
+            };
         
         default: 
             return state;

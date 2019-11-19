@@ -18,7 +18,7 @@ const Main = styled.div`
   
 
   @media(max-width: 768px) {
-    padding: 100px 0 0 0;
+    padding: 0 ;
     height: 100vh;
   }
 `;
@@ -40,7 +40,7 @@ const Grid = styled.div`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding: 0 0 50px 0;
   }
 `;
 const VideoElement = styled.video`
@@ -105,7 +105,7 @@ class ConferenceRoom extends React.Component {
     const roomId = this.props.match.params.id;
     const peerName = this.props.username;
 
-    const socket = openSocket("/", {
+    const socket = openSocket("https://bespoken.xyz", {
       query: { roomId, peerName }
     });
 
@@ -123,7 +123,7 @@ class ConferenceRoom extends React.Component {
       .then(() => {
         return navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: true
+          video: { facingMode: "user"}
         });
       })
       .then(stream => {
@@ -267,7 +267,7 @@ class ConferenceRoom extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  username: state.user
+  username: state.user.username
 });
 
 export default connect(mapStateToProps)(ConferenceRoom);

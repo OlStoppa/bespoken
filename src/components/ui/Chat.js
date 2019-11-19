@@ -20,7 +20,9 @@ const ChatWindow = styled.div`
   width: 100%;
   background: #f8f8f8;
   padding: 1rem;
+ 
   display: flex;
+  justify-content: flex-start;
   flex-direction: column-reverse;
   overflow-y: scroll;
   overflow-wrap: break-word;
@@ -67,6 +69,10 @@ const InputContainer = styled.div`
       height: 40%;
     }
   }
+
+  @media(max-width: 768px) {
+    height: auto;
+  }
 `;
 
 const ChatHeader = styled.div`
@@ -81,10 +87,12 @@ const SendButton = styled.button`
   width: 20px;
   background: transparent;
   border: none;
+  outline: none;
 
   svg {
     fill: ${props => (props.invalid ? `grey` : `blue`)};
   }
+
 `;
 
 const UserChip = styled.div`
@@ -102,14 +110,19 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
+const Wrapper = styled.div`
+  display: block;
+`;
 const MessageContainer = styled.div`
   display: flex;
+  position: relative;
   margin-bottom: 10px;
-  min-height: 30px;
+  
 `;
 
 const MessageText = styled.div`
   font-size: 0.8rem;
+  position: relative;
   display: flex;
   justify-content: flex-start;
 
@@ -164,16 +177,18 @@ const Chat = props => {
         {messages.length > 0 &&
           messages
             .map(message => (
-              <MessageContainer >
-                <PicContainer>
-                  <ProfilePic size="30" />
-                </PicContainer>
-                <MessageText>
-                  <p>
-                    <span>{message.username}</span> {message.message}
-                  </p>
-                </MessageText>
-              </MessageContainer>
+              <Wrapper>
+                <MessageContainer >
+                  <PicContainer>
+                    <ProfilePic size="30" />
+                  </PicContainer>
+                  <MessageText>
+                    <p>
+                      <span>{message.username}</span> {message.message}
+                    </p>
+                  </MessageText>
+                </MessageContainer>
+              </Wrapper>
             ))
             .reverse()}
       </ChatWindow>
@@ -213,7 +228,7 @@ const Chat = props => {
 
 const mapStateToProps = state => ({
 
-  username: state.user,
+  username: state.user.username,
   messages: state.chat
 });
 

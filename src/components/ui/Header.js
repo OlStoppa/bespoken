@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toggleModal } from '../../actions/modal';
 import styled from 'styled-components';
 import Modal from './Modal';
 import Login from './Login';
@@ -8,7 +10,7 @@ import Login from './Login';
 const HeaderContainer = styled.div`
     position: absolute;
     height: 100px;
-    background: ${props => props.pathname === `/` ? `transparent` : `#24a7ff` };
+    background: ${props => props.pathname === `/` ? `transparent` : `#24a7ff`};
     color: white;
     width: 100%;
     padding: 1rem 1rem;
@@ -28,7 +30,13 @@ const NavbarFluid = styled.div`
         border-radius: 10px;
         background: #3195ff;
         cursor: pointer;
+        transition: all 300ms ease;
+        transform: scale(1);
 
+        &:hover {
+            transform: scale(0.9);
+            background: #0062CC;
+        }
     }
 `;
 
@@ -88,31 +96,36 @@ const DropdownBox = styled.ul`
 
 
 
-const Header = ({location}) => {
+const Header = ({ location, modalOpen, toggleModal }) =>
 
-    const [ modalVisible, setModalVisible ] = useState(false);
-    
-return(
-    
-    <>
-    <HeaderContainer pathname={location.pathname}>
-        <NavbarFluid>
-        <h3>Bespoken</h3>
-        <h5 onClick={() => setModalVisible(true)}>Start/Join Room</h5>
-        
-        </NavbarFluid>
-    </HeaderContainer>
-        
-    <Modal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-    >
-        <Login setModalVisible={setModalVisible}/>
-        
-    </Modal>
-    </>
-);
-};
+    (
+
+        <>
+            <HeaderContainer pathname={location.pathname}>
+                <NavbarFluid>
+                    <h3>Bespoken</h3>
+                    <h5 onClick={() => toggleModal()}>Start/Join Room</h5>
+
+                </NavbarFluid>
+            </HeaderContainer>
+
+            <Modal
+                modalVisible={modalOpen}
+                setModalVisible={toggleModal}
+            >
+                <Login setModalVisible={toggleModal} />
+
+            </Modal>
+        </>
+    );
 
 
-export default withRouter(Header);
+const mapDispatchToProps = dispatch => ({
+    toggleModal: () => dispatch(toggleModal())
+});
+
+const mapStateToProps = state => ({
+    modalOpen: state.modal.modalOpen
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
     "express": "^4.17.1",
     "mediasoup": "^2.6.17",
     "mediasoup-client": "^2.4.11",
@@ -19,7 +20,7 @@
     "styled-components": "^4.4.1"
   },
   "scripts": {
-    "start": "node backend-bespoken/index.js",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -40,10 +41,12 @@
       "last 1 safari version"
     ]
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "A demo video cenferencing tool using webRTC and mediaoup",
   "main": "index.js",
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "@testing-library/react": "^9.3.2",
+    "prettier": "^1.19.1",
+    "react-test-render": "^1.1.2"
   },
   "author": "Oliver Lennon",
   "license": "ISC"

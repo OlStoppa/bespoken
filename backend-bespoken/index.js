@@ -24,7 +24,7 @@ const mediaServer = mediasoup.Server({
     rtcAnnouncedIPv6: config.mediasoup.rtcAnnouncedIPv6,
     rtcMinPort: config.mediasoup.rtcMinPort,
     rtcMaxPort: config.mediasoup.rtcMaxPort
-  });
+});
 
 const rooms = new Map();
 const chatMessages = {};
@@ -37,8 +37,8 @@ io.on("connection", (socket) => {
     let mediaPeer = null;
 
     const { roomId, peerName } = socket.handshake.query;
-    
-    if(rooms.has(roomId)){
+
+    if (rooms.has(roomId)) {
         room = rooms.get(roomId);
         users[roomId]++;
     } else {
@@ -48,53 +48,53 @@ io.on("connection", (socket) => {
         room.on('close', () => {
             console.log("closing room!!!!")
             delete chatMessages[roomId];
-            rooms.delete(roomId);           
+            rooms.delete(roomId);
         })
 
         chatMessages[roomId] = [];
     }
 
-    if(chatMessages[roomId]) {
+    if (chatMessages[roomId]) {
         socket.emit('messages-sent', chatMessages[roomId]);
     }
 
     socket.on('mediasoup-request', (request, cb) => {
         console.log(request)
         switch (request.method) {
-            
+
             case 'queryRoom':
-              room.receiveRequest(request)
-                .then((response) => cb(null, response))
-                .catch((error) => cb(error.toString()));
-              break;
-      
+                room.receiveRequest(request)
+                    .then((response) => cb(null, response))
+                    .catch((error) => cb(error.toString()));
+                break;
+
             case 'join':
-                    console.log( 'join request')
-              room.receiveRequest(request)
-                .then((response) => {
-                  // Get the newly created mediasoup Peer
-                  mediaPeer = room.getPeerByName(peerName);
-                    
-                  handleMediaPeer(mediaPeer);
-      
-                  // Send response back
-                  cb(null, response);
-                })
-                .catch((error) => cb(error.toString()));
-              break;
-      
+                console.log('join request')
+                room.receiveRequest(request)
+                    .then((response) => {
+                        // Get the newly created mediasoup Peer
+                        mediaPeer = room.getPeerByName(peerName);
+
+                        handleMediaPeer(mediaPeer);
+
+                        // Send response back
+                        cb(null, response);
+                    })
+                    .catch((error) => cb(error.toString()));
+                break;
+
             default:
-              if (mediaPeer) {
-                mediaPeer.receiveRequest(request)
-                  .then((response) => cb(null, response))
-                  .catch((error) => cb(error.toString()));
-              }
-          }
+                if (mediaPeer) {
+                    mediaPeer.receiveRequest(request)
+                        .then((response) => cb(null, response))
+                        .catch((error) => cb(error.toString()));
+                }
+        }
     });
 
     socket.on('mediasoup-notification', (notification) => {
         console.debug('Got notification from client peer', notification);
-        if(!mediaPeer) {
+        if (!mediaPeer) {
             console.error('Cannot hand;e mediasoup notification, no mediasoup peer');
             return;
         }
@@ -108,45 +108,45 @@ io.on("connection", (socket) => {
     })
 
     socket.on('disconnect', () => {
-        if(mediaPeer){
+        if (mediaPeer) {
             mediaPeer.close();
         }
         users[roomId]--;
-        if(users[roomId] === 0){
+        if (users[roomId] === 0) {
             room.close();
         }
 
-       
+
     });
 
     const handleMediaPeer = (mediaPeer) => {
         mediaPeer.on('notify', (notification) => {
-            console.log('new notification for mediaPeer received:' , notification);
+            console.log('new notification for mediaPeer received:', notification);
             socket.emit('mediasoup-notification', notification);
         });
-    
+
         mediaPeer.on('newtransport', (transport) => {
             console.log(' New mwdiaPeer transport:', transport.direction);
             transport.on('close', (originator) => {
                 console.log('Transport closed from originator:', originator);
             })
         });
-    
+
         mediaPeer.on('newproducer', (producer) => {
             console.log('New mediaPeer producer:', producer.kind);
             producer.on('close', (originator) => {
-              console.log('Producer closed from originator:', originator);
+                console.log('Producer closed from originator:', originator);
             });
         });
-    
+
         mediaPeer.on('newconsumer', (consumer) => {
             console.log('New mediaPeer consumer:', consumer.kind);
             consumer.on('close', (originator) => {
-              console.log('Consumer closed from originator', originator);
+                console.log('Consumer closed from originator', originator);
             });
         });
-    
-           // Also handle already existing Consumers.
+
+        // Also handle already existing Consumers.
         mediaPeer.consumers.forEach((consumer) => {
             console.log('mediaPeer existing consumer:', consumer.kind);
             consumer.on('close', (originator) => {
@@ -156,10 +156,10 @@ io.on("connection", (socket) => {
     }
 });
 
-app.use(express.static(publicPath));
-app.use("/room:id", express.static(publicPath));
+// app.use(express.static(publicPath));
+// app.use("/room:id", express.static(publicPath));
 
-console.log(publicPath);
+
 
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
