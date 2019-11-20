@@ -5,23 +5,23 @@ const PicContainer = styled.div`
     height:${props => props.size}px;
     width: ${props => props.size}px;
     border-radius: 100%;
-    background: white;
+    background: purple;
     margin: 0  5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
-const ProfilePicImg = styled.img`
-    height: ${props => props.size}px;
-    width: ${props => props.size}px;
-    border-radius: 100%;
+const ProfilePicLetter = styled.div`
+    font-size: 1rem;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
 `;
 
 const ProfilePic = (props) => (
     <PicContainer size={props.size}>
-        <ProfilePicImg 
-            size={props.size} 
-            src="https://i.pinimg.com/originals/02/5b/aa/025baa5b2cd7e46b6b4730247f6663ed.png" 
-            alt="profile pic" 
-        />
+        <ProfilePicLetter>{props.username[0]}</ProfilePicLetter>
     </PicContainer>
 
 )

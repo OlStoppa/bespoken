@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
     color: white;
     width: 100%;
     padding: 1rem 1rem;
-    z-index: 100;
+    z-index: 5;
 `;
 
 const NavbarFluid = styled.div`

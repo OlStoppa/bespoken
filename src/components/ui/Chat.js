@@ -180,7 +180,10 @@ const Chat = props => {
               <Wrapper>
                 <MessageContainer >
                   <PicContainer>
-                    <ProfilePic size="30" />
+                    <ProfilePic
+                      size="30"
+                      username={message.username}
+                    />
                   </PicContainer>
                   <MessageText>
                     <p>
@@ -194,7 +197,7 @@ const Chat = props => {
       </ChatWindow>
       <InputContainer>
         <UserChip>
-          <ProfilePic size="30" />
+          <ProfilePic size="30" username={props.username} />
 
           <span>{props.username}</span>
         </UserChip>

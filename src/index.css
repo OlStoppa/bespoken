@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:200,400,600&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400,600&display=swap');
 
 * {
   margin: 0;
@@ -9,7 +9,7 @@
 body {
   font-size: 16px;
   font-size: 16px;
-  font-family: 'Montserrat',Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
   height: 100%;
   width: 100%;
   -webkit-font-smoothing: antialiased;
@@ -17,6 +17,6 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }

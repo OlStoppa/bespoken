@@ -2,7 +2,7 @@ import React from "react";
 import ReactDom from "react-dom";
 import Styled from 'styled-components';
 
-const Overlay = props => <div className={props.className} onMouseDown={props.onMouseDown}>{props.children}</div>;
+const Overlay = props => <div data-testid="overlay" className={props.className} onMouseDown={props.onMouseDown}>{props.children}</div>;
 
 const StyledOverlay = Styled(Overlay)`
     position: fixed;

@@ -42,13 +42,13 @@ const Form = styled.form`
 `;
 
 
-const renderInput = ({ input, type }) => {
+const renderInput = ({ input, type}) => {
     return (
-        <input {...input} type={type} />
+        <input {...input} type={type}  />
     );
 }
 
-const Login = (props) => {
+export const Login = (props) => {
     let history = useHistory();
     const onSubmitLogin = (formValues) => {
         const { username, roomId } = formValues;
@@ -64,7 +64,7 @@ const Login = (props) => {
             <Form onSubmit={props.handleSubmit(onSubmitLogin)}>
                 <label>
                     Username
-            <Field name="username" component={renderInput} type="text" />
+            <Field name="username" component={renderInput} type="text"  />
                 </label>
                 <label>
                     Room Name
@@ -76,7 +76,7 @@ const Login = (props) => {
     );
 }
 
-const reduxLoginForm = reduxForm({
+export const reduxLoginForm = reduxForm({
     form: 'loginForm'
 })(Login);
 

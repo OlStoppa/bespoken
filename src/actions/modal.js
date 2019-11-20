@@ -1,5 +1,5 @@
-export const toggleModal = () => dispatch => {
-  dispatch({
+export const toggleModal = () => {
+  return ({
     type: 'TOGGLE_MODAL'
   });
 }

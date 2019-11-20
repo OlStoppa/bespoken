@@ -1,18 +1,50 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import Login from '../../../components/ui/Login';
+import { createStore } from 'redux';
+import { reduxForm } from 'redux-form';
+import { createMemoryHistory } from 'history';
+import { render, fireEvent, cleanup, getByLabelText } from '@testing-library/react';
+import { Login } from '../../../components/ui/Login';
+
 
 afterEach(cleanup);
-function reducer(state = {}, action)
+const store = createStore(() => ({}));
 
-function renderWithRedux(component, { initialState, store = createStore(reducer, initialState) } = {}) {
-  return {
-    ...render(<Provider store={store}>{component}</Provider>)
-      };
-    }
-    
-it("renders with redux", () => {
-  const {getByText} = renderWithRedux(<Login />)
+const Decorated = reduxForm({ form: 'testForm' })(Login)
+
+function renderWithReduxFormAndRouter(submit, history) {
+
+  return render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Decorated handleSubmit={submit} />
+      </Router>
+    </Provider>
+  );
+}
+
+it("renders with correctly", () => {
+  const history = createMemoryHistory();
+  const submit = jest.fn();
+
+  const { getByText } = renderWithReduxFormAndRouter(submit, history);
+  expect(getByText('Start or Join a Room')).toBeTruthy();
 })
+
+
+// test("should handle submit", () => {
+//   const history = createMemoryHistory();
+//   const submit = jest.fn();
+
+
+//   const {  getByText } = renderWithReduxFormAndRouter(submit, history);
+ 
+ 
+//   const node = getByText("Submit");
+//   fireEvent.click(node);
+
+//   expect(submit).toHaveBeenCalledTimes(1);
+  
+
+// })
