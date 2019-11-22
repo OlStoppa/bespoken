@@ -4,6 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import styled from "styled-components";
 import ProfilePic from "./ProfilePic";
 import { getMessages, addMessage } from '../../actions/chat';
+import ChatMessage from "./ChatMessage";
 
 const ChatContainer = styled.div`
   flex: 1;
@@ -110,34 +111,7 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const Wrapper = styled.div`
-  display: block;
-`;
-const MessageContainer = styled.div`
-  display: flex;
-  position: relative;
-  margin-bottom: 10px;
-  
-`;
 
-const MessageText = styled.div`
-  font-size: 0.8rem;
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-
-  p {
-    font-weight: 600;
-  }
-  span {
-    color: #7d8ea8;
-    margin-right: 5px;
-  }
-`;
-
-const PicContainer = styled.div`
-  margin-right: 10px;
-`;
 const renderInput = ({ input, type, placeholder }) => {
   return <input {...input} type={type} placeholder={placeholder} required />;
 };
@@ -174,26 +148,11 @@ const Chat = props => {
         <h3>Live Chat</h3>
       </ChatHeader>
       <ChatWindow>
-        {messages.length > 0 &&
+        {
+          messages.length > 0 &&
           messages
-            .map(message => (
-              <Wrapper>
-                <MessageContainer >
-                  <PicContainer>
-                    <ProfilePic
-                      size="30"
-                      username={message.username}
-                    />
-                  </PicContainer>
-                  <MessageText>
-                    <p>
-                      <span>{message.username}</span> {message.message}
-                    </p>
-                  </MessageText>
-                </MessageContainer>
-              </Wrapper>
-            ))
-            .reverse()}
+            .map(message => <ChatMessage message={message} />).reverse()
+        }
       </ChatWindow>
       <InputContainer>
         <UserChip>

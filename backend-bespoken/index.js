@@ -156,8 +156,8 @@ io.on("connection", (socket) => {
     }
 });
 
-// app.use(express.static(publicPath));
-// app.use("/room:id", express.static(publicPath));
+app.use(express.static(publicPath));
+app.use("/room:id", express.static(publicPath));
 
 
 

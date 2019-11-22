@@ -24,7 +24,7 @@ function renderWithReduxFormAndRouter(submit, history) {
   );
 }
 
-it("renders with correctly", () => {
+it("renders and displays correctly", () => {
   const history = createMemoryHistory();
   const submit = jest.fn();
 
@@ -39,12 +39,12 @@ it("renders with correctly", () => {
 
 
 //   const {  getByText } = renderWithReduxFormAndRouter(submit, history);
- 
- 
+
+
 //   const node = getByText("Submit");
 //   fireEvent.click(node);
 
 //   expect(submit).toHaveBeenCalledTimes(1);
-  
+
 
 // })

@@ -42,9 +42,9 @@ const Form = styled.form`
 `;
 
 
-const renderInput = ({ input, type}) => {
+const renderInput = ({ input, type }) => {
     return (
-        <input {...input} type={type}  />
+        <input {...input} type={type} required />
     );
 }
 
@@ -64,7 +64,7 @@ export const Login = (props) => {
             <Form onSubmit={props.handleSubmit(onSubmitLogin)}>
                 <label>
                     Username
-            <Field name="username" component={renderInput} type="text"  />
+            <Field name="username" component={renderInput} type="text" />
                 </label>
                 <label>
                     Room Name

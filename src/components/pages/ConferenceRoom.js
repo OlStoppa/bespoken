@@ -16,7 +16,6 @@ const Main = styled.div`
   padding: 150px 1rem 1rem 2rem;
   background: #f5f5f5;
   
-
   @media(max-width: 768px) {
     padding: 0 ;
     height: 100vh;
@@ -123,14 +122,14 @@ class ConferenceRoom extends React.Component {
       .then(() => {
         return navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: { facingMode: "user"}
+          video: { facingMode: "user" }
         });
       })
       .then(stream => {
         const audioTrack = stream.getAudioTracks()[0];
         const videoTrack = stream.getVideoTracks()[0];
         const localStream = new MediaStream([videoTrack]);
-        this.setState({localStream});
+        this.setState({ localStream });
         this.myVideo.current.srcObject = localStream;
         const audioProducer = this.room.createProducer(audioTrack);
         const videoProducer = this.room.createProducer(videoTrack);
@@ -138,14 +137,12 @@ class ConferenceRoom extends React.Component {
           audioProducer,
           videoProducer
         });
-
-        // Send our audio.
+        // Send our audio and video
         audioProducer.send(sendTransport);
         videoProducer.send(sendTransport);
       });
 
     this.room.on("newpeer", peer => {
-      console.log("A new Peer joined the Room:", peer.name);
       this.handlePeer(peer);
     });
 
@@ -155,20 +152,19 @@ class ConferenceRoom extends React.Component {
           // Success response, so pass the mediasoup response to the local Room.
           callback(response);
         } else {
-          errback(err);
+          alert("That name is taken is in use in this room. Please choose a different name");
+          this.props.history.push('/');
         }
       });
     });
 
     // Be ready to send mediaSoup client notifications to our remote mediaSoup Peer
     this.room.on("notify", notification => {
-      console.log("New notification from local room:", notification);
       socket.emit("mediasoup-notification", notification);
     });
 
     // Handle notifications from server, as there might be important info, that affects stream
     socket.on("mediasoup-notification", notification => {
-      console.log("New notification came from server:", notification);
       this.room.receiveNotification(notification);
     });
   }
@@ -182,13 +178,10 @@ class ConferenceRoom extends React.Component {
     // Handle all the Consumers in the Peer.
     peer.consumers.forEach(consumer => this.handleConsumer(consumer));
     peer.on("close", (peer) => {
-      console.log("Remote Peer closed", peer);
     });
 
     // Event fired when the remote Peer sends a new media to mediasoup server.
     peer.on("newconsumer", consumer => {
-      console.log("Got a new remote Consumer");
-
       this.handleConsumer(consumer);
     });
   }
@@ -198,8 +191,8 @@ class ConferenceRoom extends React.Component {
       const stream = new MediaStream();
       stream.addTrack(track);
       stream.consumerId = consumer.id;
-      
-      if (consumer.kind === "video") {  
+
+      if (consumer.kind === "video") {
         const arr = [...this.state.incomingVideo, stream];
         this.setState({ incomingVideo: arr }, () => {
         })
@@ -211,7 +204,6 @@ class ConferenceRoom extends React.Component {
       consumer.on("close", () => {
         if (consumer.kind === "video") {
           const streamsArr = this.state.incomingVideo.filter((stream) => stream.consumerId !== consumer.id);
-          console.log("id comparison", consumer.id)
           this.setState({ incomingVideo: streamsArr })
         }
         if (consumer.kind === "audio") {
@@ -223,13 +215,17 @@ class ConferenceRoom extends React.Component {
   }
 
   handleStopTransmitStream = () => {
-    this.state.localStream.getTracks().forEach(track => {
-      console.log(track);
-      track.stop();
-    });
+
+    if (this.state.localStream) {
+      this.state.localStream.getTracks().forEach(track => {
+        track.stop();
+      });
+    }
     this.sendTransport = null;
-    this.state.audioProducer.close();
-    this.state.videoProducer.close();
+    if (this.state.audioProducer && this.state.videoProducer) {
+      this.state.audioProducer.close();
+      this.state.videoProducer.close();
+    }
   };
 
   render() {
@@ -251,13 +247,13 @@ class ConferenceRoom extends React.Component {
               playsInline
             />
             {
-              this.state.incomingVideo.map(stream => 
-                   <VideoEl key={stream.id} stream={stream} />
+              this.state.incomingVideo.map(stream =>
+                <VideoEl key={stream.id} stream={stream} />
               )
             }
             {
-              this.state.incomingAudio.map(stream => 
-                <AudioEl key={stream.id} stream={stream}/>
+              this.state.incomingAudio.map(stream =>
+                <AudioEl key={stream.id} stream={stream} />
               )
             }
           </VideoContainer>
