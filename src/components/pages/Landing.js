@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import { toggleModal } from '../../actions/modal';
+import Footer from '../ui/Footer';
 import MainButton from "../ui/MainButton";
 import ServiceCard from "../ui/ServiceCard";
 import PublicStreamSvg from "../../assets/online-class.svg";
@@ -9,13 +10,16 @@ import LimitedStreamSvg from "../../assets/online.svg";
 import PrivateSvg from "../../assets/privacy.svg";
 import TestSvg from "../../assets/motivational-speech.svg";
 import groupChat from "../../assets/group-chat.svg";
-import Header from '../../components/ui/Header';
+import conference from "../../assets/screenroom.png";
+
 
 
 
 const Container = styled.div`
   font-size: 1rem;
   background: transparent;
+  display: flex;
+  flex-direction: column;
 `;
 
 const HeaderHolder = styled.div`
@@ -162,89 +166,143 @@ const TitleContainer = styled.div`
 const ClassroomsContainer = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 100px;
+  padding-top: 100px;
+`;
 
+const FlexContainer = styled.div`
+  display: flex;
+  
+  @media(max-width: 768px) {
+    flex-direction: column;
+  }
+`
+const ImgContainer = styled.div`
+  width: 100%; 
+  padding: 1rem; 
+  box-shadow: -1px 8px 18px rgba(0, 0, 0, 0.08); 
+  background: white; 
+  margin-right: 1em;
+`;
+
+const ClassroomCard = styled.div`
+  width: 70%;
+
+  @media(max-width: 768px) {
+    width: 100%;
+    margin-top: 25px;
+  }
+`;
+
+const CardInner = styled.div`
+  padding: 2rem; 
+  background: white; 
+  border-radius: 10; 
+  height: 75%;
+  text-align: center
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Landing = ({ toggleModal }) => {
 
   return (
     <>
-      <Header />
-      <Container>
-        <HeaderHolder>
-          <TopContentContainer>
-            <FluidContent>
-              <MainTitles>
-                <h1>
-                  Conference <span style={{ color: "#84ebad" }}>privately</span> in a live video chat room.
+    <Container>
+      <HeaderHolder>
+        <TopContentContainer>
+          <FluidContent>
+            <MainTitles>
+              <h1>
+                Conference <span style={{ color: "#84ebad" }}>privately</span> in a live video chat room.
               </h1>
-                <p>
-                  Join an existing room or open a new one.
+              <p>
+                Join an existing room or open a new one.
               </p>
-                <div>
-                  <MainButton
-                    color="white"
-                    background="#3195ff"
-                    text="Get Started"
-                    onClick={toggleModal}
-                  />
-                </div>
-              </MainTitles>
-            </FluidContent>
-          </TopContentContainer>
-          <Background />
-          <GraphicContainer>
-            <img src={groupChat} alt="people chatting online" />
-          </GraphicContainer>
+              <div>
+                <MainButton
+                  color="white"
+                  background="#3195ff"
+                  text="Get Started"
+                  onClick={toggleModal}
+                />
+              </div>
+            </MainTitles>
+          </FluidContent>
+        </TopContentContainer>
+        <Background />
+        <GraphicContainer>
+          <img src={groupChat} alt="people chatting online" />
+        </GraphicContainer>
 
-        </HeaderHolder>
-        <div>
-          <FluidContent>
-            <TitleContainer>
-              <h2>Our Service</h2>
-              <h4>Just choose a username and say which room you would like to join. If there is no room by that name, a new one will be opened.</h4>
-            </TitleContainer>
-          </FluidContent>
-          <FluidContent>
-            <ServiceCard
-              img={PublicStreamSvg}
-              title="Teaching"
-              text="Bespoken is a great place for online classes. Use live video and chat."
-              color="#24a7ff"
-            />
-            <ServiceCard
-              img={LimitedStreamSvg}
-              title="Low latency"
-              text="Bespoken uses webRTC to connect straight to your browser for minimal lag."
-              color="rgb(132, 235, 173)"
-            />
-            <ServiceCard
-              img={PrivateSvg}
-              title="Privacy"
-              text="No user data is stored after a room has been closed and communications are encrypted with SSL."
-              color="#24a7ff"
-            />
-            <ServiceCard
-              img={TestSvg}
-              title="CPU light"
-              text="Bespoken uses a selective forwarding unit for live video communication."
-              color="rgb(132, 235, 173)"
-            />
+      </HeaderHolder>
+      <div>
+        <FluidContent>
+          <TitleContainer>
+            <h2>Our Service</h2>
+            <h4>Just choose a username and say which room you would like to join. If there is no room by that name, a new one will be opened.</h4>
+          </TitleContainer>
+        </FluidContent>
+        <FluidContent>
+          <ServiceCard
+            img={PublicStreamSvg}
+            title="Teaching"
+            text="Bespoken is a great place for online classes. Use live video and chat."
+            color="#24a7ff"
+          />
+          <ServiceCard
+            img={LimitedStreamSvg}
+            title="Low latency"
+            text="Bespoken uses webRTC to connect straight to your browser for minimal lag."
+            color="rgb(132, 235, 173)"
+          />
+          <ServiceCard
+            img={PrivateSvg}
+            title="Privacy"
+            text="No user data is stored after a room has been closed and communications are encrypted with SSL."
+            color="#24a7ff"
+          />
+          <ServiceCard
+            img={TestSvg}
+            title="CPU light"
+            text="Bespoken uses a selective forwarding unit for live video communication."
+            color="rgb(132, 235, 173)"
+          />
 
-          </FluidContent>
-        </div>
-        <ClassroomsContainer>
-          <FluidContent>
-            <BackgroundColor />
-            <TitleContainer>
-              <h2>Classrooms</h2>
-              <h4>Whatever class you choose to participate in, it will take place in our online classrooms.</h4>
-              <h4>The classrooms are built in to the ClassStream website. No extra software is needed!</h4>
-            </TitleContainer>
-          </FluidContent>
-        </ClassroomsContainer>
-      </Container>
+        </FluidContent>
+      </div>
+      <ClassroomsContainer>
+        <FluidContent>
+          <BackgroundColor />
+          <TitleContainer>
+            <h2>Conference Rooms</h2>
+            <h4>Whether on mobile or desktop, we've got you covered.</h4>
+            <h4></h4>
+          </TitleContainer>
+        <FlexContainer>
+          <ImgContainer>
+            <img src={conference} style={{width: '100%'}}/>
+          </ImgContainer>
+          <ClassroomCard>
+          <CardInner>
+            <h3>Multi-purpose conference rooms</h3>
+            <p>
+              With live video and text chat, you and up to three friends can happily chat the day away, get work done or teach a great class.
+            </p>
+            <MainButton
+                  color="white"
+                  background="#3195ff"
+                  text="Get Started"
+                  onClick={toggleModal}
+                />
+          </CardInner>
+          </ClassroomCard>
+        </FlexContainer>
+        </FluidContent>
+      </ClassroomsContainer>
+      <Footer/>
+    </Container>
+    
     </>
   );
 };

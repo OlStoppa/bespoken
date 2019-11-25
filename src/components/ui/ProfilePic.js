@@ -5,7 +5,7 @@ const PicContainer = styled.div`
     height:${props => props.size}px;
     width: ${props => props.size}px;
     border-radius: 100%;
-    background: purple;
+    background: ${props => props.color};
     margin: 0  5px;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@ const ProfilePicLetter = styled.div`
 `;
 
 const ProfilePic = (props) => (
-    <PicContainer size={props.size}>
+    <PicContainer color={props.color} size={props.size}>
         <ProfilePicLetter>{props.username[0]}</ProfilePicLetter>
     </PicContainer>
 

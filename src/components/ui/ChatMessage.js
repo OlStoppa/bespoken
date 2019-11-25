@@ -38,6 +38,7 @@ const ChatMessage = ({ message }) => (
         <ProfilePic
           size="30"
           username={message.username}
+          color={message.color}
         />
       </PicContainer>
       <MessageText>

@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 
 const PrivateRoute = ({
   username,
-  component: Component 
-}) => { console.log(!!username, "USERNMM")
-  return(
-    <Route component={(props) => (
-      username !== null ? 
+  component: Component,
+  ...rest
+}) => {
+  return (
+    <Route {...rest} component={(props) => (
+      username !== null ?
         <Component {...props} />
-  :
-    <Redirect to="/" />
-  
+        :
+        <Redirect to="/" />
 
-    )}/>
-)};
+
+    )} />
+  )
+};
 
 const mapStateToProps = (state) => ({
   username: state.user.username

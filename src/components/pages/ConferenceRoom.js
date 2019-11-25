@@ -1,8 +1,9 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import openSocket from "socket.io-client";
 import { Room } from "mediasoup-client";
+import { resetUser } from  "../../actions/user";
 import Chat from "../ui/Chat";
 import VideoEl from "../ui/VideoEl";
 import AudioEl from "../ui/AudioEl";
@@ -11,14 +12,18 @@ const Main = styled.div`
   width: 100%;
   background: white;
   display: flex;
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  padding: 150px 1rem 1rem 2rem;
+  padding: 60px 1rem 1rem 2rem;
   background: #f5f5f5;
+
+  @media(max-width: 1024px){
+    padding: 60px 0.5rem 0.5rem 0.5rem;
+  }
   
   @media(max-width: 768px) {
     padding: 0 ;
-    height: 100vh;
   }
 `;
 const Grid = styled.div`
@@ -32,23 +37,30 @@ const Grid = styled.div`
   grid-gap: 1rem;
   
   @media(max-width: 1024px) {
-    height: 100vh
+    height: 100%;
   }
 
   @media (max-width: 768px) {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 0 50px 0;
+    padding: 0;
+  }
+
+  @media (max-width: 768px) and (orientation: landscape){
+    flex-direction: row;
+    height: 100vh;
+    
   }
 `;
 const VideoElement = styled.video`
   background-color: #ddd;
   place-self: center;
-  width: 300px;
-
+  width: 200px;
+  z-index: 5;
+  ${({ count }) => count && css`position: absolute; top: 0; right: 0;`}
   @media (max-width: 768px) {
-    width: 100%;
+    width: ${({ count }) => count ? `20%` : `100%`};
   }
 `;
 
@@ -58,17 +70,17 @@ const InteractionPanel = styled.div`
   height: 100%;
   @media (max-width: 768px) {
     order: 2;
-    
+    width: 100%;
   }
 `;
 
 const VideoContainer = styled.div`
   position: relative;
-  display: grid;
+  display: ${props => props.count ? 'block' : 'grid'};
   grid-template-columns: 1fr 1fr;
   // grid-template-rows: minmax(0,1fr) minmax(0,1fr);
   height: 100%;
-  background: white;
+  background: #313639;
 
    div {
     display: flex;
@@ -78,6 +90,7 @@ const VideoContainer = styled.div`
   @media (max-width: 768px) {
     order: 1;
     height: auto;
+    display: ${props => props.count ? 'block' : 'grid'};
   }
 `;
 
@@ -103,7 +116,6 @@ class ConferenceRoom extends React.Component {
   componentDidMount() {
     const roomId = this.props.match.params.id;
     const peerName = this.props.username;
-
     const socket = openSocket("https://bespoken.xyz", {
       query: { roomId, peerName }
     });
@@ -172,6 +184,7 @@ class ConferenceRoom extends React.Component {
   componentWillUnmount() {
     this.state.socket.disconnect();
     this.handleStopTransmitStream();
+    this.props.resetUser();
   }
 
   handlePeer(peer) {
@@ -229,7 +242,6 @@ class ConferenceRoom extends React.Component {
   };
 
   render() {
-    console.log(this.state.incomingVideo)
     return (
       <Main>
         <Grid>
@@ -240,15 +252,16 @@ class ConferenceRoom extends React.Component {
               />
             </div>
           </InteractionPanel>
-          <VideoContainer>
+          <VideoContainer count={this.state.incomingVideo.length < 2}>
             <VideoElement
               ref={this.myVideo}
               autoPlay
               playsInline
+              count={this.state.incomingVideo.length < 2}
             />
             {
               this.state.incomingVideo.map(stream =>
-                <VideoEl key={stream.id} stream={stream} />
+                <VideoEl key={stream.id} stream={stream} count={this.state.incomingVideo.length < 2} />
               )
             }
             {
@@ -266,4 +279,8 @@ const mapStateToProps = state => ({
   username: state.user.username
 });
 
-export default connect(mapStateToProps)(ConferenceRoom);
+const mapDispatchToProps = dispatch => ({
+  resetUser: () => dispatch(resetUser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConferenceRoom);

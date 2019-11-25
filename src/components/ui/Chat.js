@@ -37,8 +37,8 @@ const ChatWindow = styled.div`
 
 const InputContainer = styled.div`
  
-
   height: 20%;
+  min-height: 100px;
   width: 100%;
   background: white;
   padding: 1rem;
@@ -112,11 +112,11 @@ const ButtonContainer = styled.div`
 `;
 
 
-const renderInput = ({ input, type, placeholder }) => {
+const renderInput = ({ input, type, placeholder, color }) => {
   return <input {...input} type={type} placeholder={placeholder} required />;
 };
 const Chat = props => {
-  const { socket, username, getMessages, addMessage, messages } = props;
+  const { socket, username, getMessages, addMessage, messages, color } = props;
 
   useEffect(() => {
     if (socket) {
@@ -135,6 +135,7 @@ const Chat = props => {
     const messageObject = {
       message,
       username,
+      color
 
     };
     addMessage(messageObject);
@@ -156,7 +157,7 @@ const Chat = props => {
       </ChatWindow>
       <InputContainer>
         <UserChip>
-          <ProfilePic size="30" username={props.username} />
+          <ProfilePic size="30" username={props.username} color={color} />
 
           <span>{props.username}</span>
         </UserChip>
@@ -191,7 +192,8 @@ const Chat = props => {
 const mapStateToProps = state => ({
 
   username: state.user.username,
-  messages: state.chat
+  messages: state.chat,
+  color: state.user.color
 });
 
 const mapDispatchToProps = dispatch => ({
