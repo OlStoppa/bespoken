@@ -43,45 +43,45 @@ const Form = styled.form`
 
 
 const renderInput = ({ input, type }) => {
-    return (
-        <input {...input} type={type} required />
-    );
+  return (
+    <input {...input} type={type} required />
+  );
 }
 
 export const Login = (props) => {
-    let history = useHistory();
-    const onSubmitLogin = (formValues) => {
-        const { username, roomId } = formValues;
-        props.setUsername(username).then(() => history.push(`/room/:${roomId}`));
-        props.setModalVisible(false);
-    }
+  let history = useHistory();
+  const onSubmitLogin = (formValues) => {
+    const { username, roomId } = formValues;
+    props.setUsername(username).then(() => history.push(`/room/:${roomId}`));
+    props.setModalVisible(false);
+  }
 
-    return (
-        <Container>
-            <Header>
-                <h2>Start or Join a Room</h2>
-            </Header>
-            <Form onSubmit={props.handleSubmit(onSubmitLogin)}>
-                <label>
-                    Username
-            <Field name="username" component={renderInput} type="text" />
-                </label>
-                <label>
-                    Room Name
-            <Field name="roomId" component={renderInput} type="text" />
-                </label>
-                <button>Submit</button>
-            </Form>
-        </Container>
-    );
+  return (
+    <Container>
+      <Header>
+        <h2>Start or Join a Room</h2>
+      </Header>
+      <Form onSubmit={props.handleSubmit(onSubmitLogin)}>
+        <label>
+          Username
+          <Field name="username" component={renderInput} type="text" />
+        </label>
+        <label>
+          Room Name
+          <Field name="roomId" component={renderInput} type="text" />
+        </label>
+        <button>Submit</button>
+      </Form>
+    </Container>
+  );
 }
 
 export const reduxLoginForm = reduxForm({
-    form: 'loginForm'
+  form: 'loginForm'
 })(Login);
 
 const mapDispatchToProps = dispatch => ({
-    setUsername: (username, history, roomId) => dispatch(setUsername(username, history, roomId))
+  setUsername: (username, history, roomId) => dispatch(setUsername(username, history, roomId))
 });
 
 export default connect(undefined, mapDispatchToProps)(reduxLoginForm);

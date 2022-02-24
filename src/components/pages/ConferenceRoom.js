@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import openSocket from "socket.io-client";
 import { Room } from "mediasoup-client";
-import { resetUser } from  "../../actions/user";
+import { resetUser } from "../../actions/user";
 import Chat from "../ui/Chat";
 import VideoEl from "../ui/VideoEl";
 import AudioEl from "../ui/AudioEl";
@@ -116,7 +116,7 @@ class ConferenceRoom extends React.Component {
   componentDidMount() {
     const roomId = this.props.match.params.id;
     const peerName = this.props.username;
-    const socket = openSocket("https://bespoken.xyz", {
+    const socket = openSocket("https://bespoken.live", {
       query: { roomId, peerName }
     });
 

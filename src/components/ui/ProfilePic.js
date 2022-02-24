@@ -20,9 +20,9 @@ const ProfilePicLetter = styled.div`
 `;
 
 const ProfilePic = (props) => (
-    <PicContainer color={props.color} size={props.size}>
-        <ProfilePicLetter>{props.username[0]}</ProfilePicLetter>
-    </PicContainer>
+  <PicContainer color={props.color} size={props.size}>
+    <ProfilePicLetter>{props.username[0]}</ProfilePicLetter>
+  </PicContainer>
 
 )
 

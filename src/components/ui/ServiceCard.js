@@ -70,21 +70,19 @@ const ImgBackground = styled.div`
 `;
 
 const ServiceCard = (props) => (
-    <Card>
-        <CardImg>
-            <ImgBackground color={props.color}>
-            <img style={{width: '50%'}} src={props.img} alt=""/>
-            </ImgBackground>
-        </CardImg>
-        <CardInfo>
-            <Title>
-                <h3>{props.title}</h3>
-            </Title>
-            <p>{props.text}</p>
-
-        </CardInfo>
-
-    </Card>
+  <Card>
+    <CardImg>
+      <ImgBackground color={props.color}>
+        <img style={{ width: '50%' }} src={props.img} alt="" />
+      </ImgBackground>
+    </CardImg>
+    <CardInfo>
+      <Title>
+        <h3>{props.title}</h3>
+      </Title>
+      <p>{props.text}</p>
+    </CardInfo>
+  </Card>
 );
 
 export default ServiceCard;

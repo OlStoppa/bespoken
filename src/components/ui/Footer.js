@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {FaEnvelope, FaPhone, FaInstagram, FaFacebookSquare, FaYoutubeSquare} from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaInstagram, FaFacebookSquare, FaYoutubeSquare } from 'react-icons/fa';
 
 
 const Container = styled.div`
@@ -29,17 +29,15 @@ const Footer = () => (
   <Container>
     <Fluid>
       <div>
-      <p><FaPhone style={{marginRight: '1rem'}}/>+8869233038023</p>
-      <p><FaEnvelope style={{marginRight: '1rem'}}/>support@bespoken.xyz</p>
-
+        <p><FaPhone style={{ marginRight: '1rem' }} />+8869233038023</p>
+        <p><FaEnvelope style={{ marginRight: '1rem' }} />support@bespoken.xyz</p>
       </div>
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <FaFacebookSquare style={{color: 'white', fontSize: '30px', margin: '5px'}}/>
-        <FaYoutubeSquare style={{color: 'white', fontSize: '30px', margin: '5px'}}/>
-        <FaInstagram style={{color: 'white', fontSize: '30px', margin: '5px'}}/>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <FaFacebookSquare style={{ color: 'white', fontSize: '30px', margin: '5px' }} />
+        <FaYoutubeSquare style={{ color: 'white', fontSize: '30px', margin: '5px' }} />
+        <FaInstagram style={{ color: 'white', fontSize: '30px', margin: '5px' }} />
       </div>
-      
-      </Fluid>
+    </Fluid>
   </Container>
 );
 

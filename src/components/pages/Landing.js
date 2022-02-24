@@ -208,101 +208,101 @@ const Landing = ({ toggleModal }) => {
 
   return (
     <>
-    <Container>
-      <HeaderHolder>
-        <TopContentContainer>
+      <Container>
+        <HeaderHolder>
+          <TopContentContainer>
+            <FluidContent>
+              <MainTitles>
+                <h1>
+                  Conference <span style={{ color: "#84ebad" }}>privately</span> in a live video chat room.
+                </h1>
+                <p>
+                  Join an existing room or open a new one.
+                </p>
+                <div>
+                  <MainButton
+                    color="white"
+                    background="#3195ff"
+                    text="Get Started"
+                    onClick={toggleModal}
+                  />
+                </div>
+              </MainTitles>
+            </FluidContent>
+          </TopContentContainer>
+          <Background />
+          <GraphicContainer>
+            <img src={groupChat} alt="people chatting online" />
+          </GraphicContainer>
+
+        </HeaderHolder>
+        <div>
           <FluidContent>
-            <MainTitles>
-              <h1>
-                Conference <span style={{ color: "#84ebad" }}>privately</span> in a live video chat room.
-              </h1>
-              <p>
-                Join an existing room or open a new one.
-              </p>
-              <div>
-                <MainButton
-                  color="white"
-                  background="#3195ff"
-                  text="Get Started"
-                  onClick={toggleModal}
-                />
-              </div>
-            </MainTitles>
+            <TitleContainer>
+              <h2>Our Service</h2>
+              <h4>Just choose a username and say which room you would like to join. If there is no room by that name, a new one will be opened.</h4>
+            </TitleContainer>
           </FluidContent>
-        </TopContentContainer>
-        <Background />
-        <GraphicContainer>
-          <img src={groupChat} alt="people chatting online" />
-        </GraphicContainer>
+          <FluidContent>
+            <ServiceCard
+              img={PublicStreamSvg}
+              title="Teaching"
+              text="Bespoken is a great place for online classes. Use live video and chat."
+              color="#24a7ff"
+            />
+            <ServiceCard
+              img={LimitedStreamSvg}
+              title="Low latency"
+              text="Bespoken uses webRTC to connect straight to your browser for minimal lag."
+              color="rgb(132, 235, 173)"
+            />
+            <ServiceCard
+              img={PrivateSvg}
+              title="Privacy"
+              text="No user data is stored after a room has been closed and communications are encrypted with SSL."
+              color="#24a7ff"
+            />
+            <ServiceCard
+              img={TestSvg}
+              title="CPU light"
+              text="Bespoken uses a selective forwarding unit for live video communication."
+              color="rgb(132, 235, 173)"
+            />
 
-      </HeaderHolder>
-      <div>
-        <FluidContent>
-          <TitleContainer>
-            <h2>Our Service</h2>
-            <h4>Just choose a username and say which room you would like to join. If there is no room by that name, a new one will be opened.</h4>
-          </TitleContainer>
-        </FluidContent>
-        <FluidContent>
-          <ServiceCard
-            img={PublicStreamSvg}
-            title="Teaching"
-            text="Bespoken is a great place for online classes. Use live video and chat."
-            color="#24a7ff"
-          />
-          <ServiceCard
-            img={LimitedStreamSvg}
-            title="Low latency"
-            text="Bespoken uses webRTC to connect straight to your browser for minimal lag."
-            color="rgb(132, 235, 173)"
-          />
-          <ServiceCard
-            img={PrivateSvg}
-            title="Privacy"
-            text="No user data is stored after a room has been closed and communications are encrypted with SSL."
-            color="#24a7ff"
-          />
-          <ServiceCard
-            img={TestSvg}
-            title="CPU light"
-            text="Bespoken uses a selective forwarding unit for live video communication."
-            color="rgb(132, 235, 173)"
-          />
+          </FluidContent>
+        </div>
+        <ClassroomsContainer>
+          <FluidContent>
+            <BackgroundColor />
+            <TitleContainer>
+              <h2>Conference Rooms</h2>
+              <h4>Whether on mobile or desktop, we've got you covered.</h4>
+              <h4></h4>
+            </TitleContainer>
+            <FlexContainer>
+              <ImgContainer>
+                <img src={conference} style={{ width: '100%' }} />
+              </ImgContainer>
+              <ClassroomCard>
+                <CardInner>
+                  <h3>Multi-purpose conference rooms</h3>
+                  <p>
+                    With live video and text chat, you and up to three friends can happily chat the day away, get work done or teach a great class.
+                  </p>
+                  <MainButton
+                    color="white"
+                    background="#3195ff"
+                    text="Get Started"
+                    onClick={toggleModal}
+                  />
+                </CardInner>
+              </ClassroomCard>
+            </FlexContainer>
+          </FluidContent>
+        </ClassroomsContainer>
+        <Footer />
+      </Container>
 
-        </FluidContent>
-      </div>
-      <ClassroomsContainer>
-        <FluidContent>
-          <BackgroundColor />
-          <TitleContainer>
-            <h2>Conference Rooms</h2>
-            <h4>Whether on mobile or desktop, we've got you covered.</h4>
-            <h4></h4>
-          </TitleContainer>
-        <FlexContainer>
-          <ImgContainer>
-            <img src={conference} style={{width: '100%'}}/>
-          </ImgContainer>
-          <ClassroomCard>
-          <CardInner>
-            <h3>Multi-purpose conference rooms</h3>
-            <p>
-              With live video and text chat, you and up to three friends can happily chat the day away, get work done or teach a great class.
-            </p>
-            <MainButton
-                  color="white"
-                  background="#3195ff"
-                  text="Get Started"
-                  onClick={toggleModal}
-                />
-          </CardInner>
-          </ClassroomCard>
-        </FlexContainer>
-        </FluidContent>
-      </ClassroomsContainer>
-      <Footer/>
-    </Container>
-    
     </>
   );
 };

@@ -26,13 +26,13 @@ cursor: pointer;
 
 `;
 const MainButton = props => (
-    <Button
-        background={props.background}
-        onClick={props.onClick}
-        color={props.color}
-    >
-        {props.text}
-    </Button>
+  <Button
+    background={props.background}
+    onClick={props.onClick}
+    color={props.color}
+  >
+    {props.text}
+  </Button>
 );
 
 export default MainButton;

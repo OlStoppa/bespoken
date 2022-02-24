@@ -68,46 +68,42 @@ const ProfileContainer = styled.div`
 
 const Header = ({ location, modalOpen, toggleModal, username, color }) =>
 
-    (
+(
+  <>
+    <HeaderContainer pathname={location.pathname}>
+      <NavbarFluid>
+        <h3>Bespoken</h3>
+        {
+          !username ?
+            <h5 onClick={() => toggleModal()}>Start/Join Room</h5> :
+            (
+              <ProfileContainer>
+                <h5>{username}</h5>
+                <ProfilePic username={username} size={32} color={color} />
+              </ProfileContainer>
+            )
+        }
+      </NavbarFluid>
+    </HeaderContainer>
 
-        <>
-            <HeaderContainer pathname={location.pathname}>
-                <NavbarFluid>
-                    <h3>Bespoken</h3>
-                    {
-                        !username ?
-                            <h5 onClick={() => toggleModal()}>Start/Join Room</h5>
-                            :
-                            (
-                                <ProfileContainer>
-                                    <h5>{username}</h5>
-                                    <ProfilePic username={username} size={32} color={color}/>
-                                </ProfileContainer>
-                            )
-                    }
-
-                </NavbarFluid>
-            </HeaderContainer>
-
-            <Modal
-                modalVisible={modalOpen}
-                setModalVisible={toggleModal}
-            >
-                <Login setModalVisible={toggleModal} />
-
-            </Modal>
-        </>
-    );
+    <Modal
+      modalVisible={modalOpen}
+      setModalVisible={toggleModal}
+    >
+      <Login setModalVisible={toggleModal} />
+    </Modal>
+  </>
+);
 
 
 const mapDispatchToProps = dispatch => ({
-    toggleModal: () => dispatch(toggleModal())
+  toggleModal: () => dispatch(toggleModal())
 });
 
 const mapStateToProps = state => ({
-    modalOpen: state.modal.modalOpen,
-    username: state.user.username,
-    color: state.user.color
+  modalOpen: state.modal.modalOpen,
+  username: state.user.username,
+  color: state.user.color
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

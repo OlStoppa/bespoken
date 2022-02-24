@@ -35,12 +35,12 @@ const ModalBox = Styled.div`
     }
 `;
 const Modal = props => {
-    return ReactDom.createPortal(
-        <StyledOverlay modalVisible={props.modalVisible} onMouseDown={() => props.setModalVisible(false)}>
-            <ModalBox onMouseDown={(e) => e.stopPropagation()} >{props.children}</ModalBox>
-        </StyledOverlay>,
-        document.querySelector("#modal")
-    );
+  return ReactDom.createPortal(
+    <StyledOverlay modalVisible={props.modalVisible} onMouseDown={() => props.setModalVisible(false)}>
+      <ModalBox onMouseDown={(e) => e.stopPropagation()} >{props.children}</ModalBox>
+    </StyledOverlay>,
+    document.querySelector("#modal")
+  );
 };
 
 export default Modal;

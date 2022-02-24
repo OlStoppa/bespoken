@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 const VideoElement = styled.video`
   background-color: #ddd;
-    width: ${({ isLandscape, count }) => count ? `auto` : isLandscape ? `auto` : `auto`};
-    height: ${({ isLandscape, count }) => count ? `100%` : isLandscape ? `100%` : `100%`};
-place-self: center;
+  width: ${({ isLandscape, count }) => count ? `auto` : isLandscape ? `auto` : `auto`};
+  height: ${({ isLandscape, count }) => count ? `100%` : isLandscape ? `100%` : `100%`};
+  place-self: center;
 
 @media(max-width: 768px) {
   width: 100%;
